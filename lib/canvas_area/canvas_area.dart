@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'models/beer.dart';
-import 'models/touch_slice.dart';
 
 class CanvasArea extends StatefulWidget {
   @override
@@ -14,7 +13,6 @@ class CanvasArea extends StatefulWidget {
 
 class _CanvasAreaState<CanvasArea> extends State {
   int score = 0;
-  TouchSlice touchSlice;
   List<Beer> beers = List();
 
   @override
@@ -60,7 +58,6 @@ class _CanvasAreaState<CanvasArea> extends State {
     List<Widget> widgetsOnStack = List();
 
     widgetsOnStack.add(_getBackground());
-    widgetsOnStack.add(_getSlice());
     widgetsOnStack.addAll(_getBeer());
     widgetsOnStack.add(
       Positioned(
@@ -92,15 +89,7 @@ class _CanvasAreaState<CanvasArea> extends State {
     );
   }
 
-  Widget _getSlice() {
-    if (touchSlice == null) {
-      return Container();
-    }
 
-    return CustomPaint(
-      size: Size.infinite,
-    );
-  }
 
   List<Widget> _getBeer() {
     List<Widget> list = new List();
