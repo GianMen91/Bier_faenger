@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'models/beer.dart';
+import 'models/pretzel.dart';
 
 class CanvasArea extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _CanvasAreaState<CanvasArea> extends State {
   int score = 0;
   int alcool = 0;
   List<Beer> beers = List();
+  List<Pretzel> pretzels = List();
   Stopwatch _stopwatch;
 
   String formatTime(int milliseconds) {
@@ -28,6 +30,7 @@ class _CanvasAreaState<CanvasArea> extends State {
   @override
   void initState() {
     _spawnRandomBeers();
+    _spawnRandomPretzel();
     _tick();
     _stopwatch = Stopwatch();
     super.initState();
@@ -43,15 +46,34 @@ class _CanvasAreaState<CanvasArea> extends State {
         rotation: Random().nextDouble() / 3 - 0.16));
   }
 
+  void _spawnRandomPretzel() {
+    pretzels.add(new Pretzel(
+        position: Offset(0, 200),
+        width: 80,
+        height: 80,
+        additionalForce:
+        Offset(5 + Random().nextDouble() * 5, Random().nextDouble() * -10),
+        rotation: Random().nextDouble() / 3 - 0.16));
+  }
+
   void _tick() {
     setState(() {
       for (Beer beer in beers) {
         beer.applyGravity();
       }
 
+      for (Pretzel pretzel in pretzels) {
+        pretzel.applyGravity();
+      }
+
       if (Random().nextDouble() > 0.97) {
         _spawnRandomBeers();
+        _spawnRandomPretzel();
       }
+
+      /*if (Random().nextDouble() > 0.97) {
+        _spawnRandomPretzel();
+      }*/
     });
 
     Future.delayed(Duration(milliseconds: 30), _tick);
@@ -68,6 +90,7 @@ class _CanvasAreaState<CanvasArea> extends State {
 
     widgetsOnStack.add(_getBackground());
     widgetsOnStack.addAll(_getBeer());
+    widgetsOnStack.addAll(_getPretzel());
     widgetsOnStack.add(Positioned(
         left: 16,
         top: 16,
@@ -135,6 +158,40 @@ class _CanvasAreaState<CanvasArea> extends State {
     return Image.asset('assets/beer.png', height: 80, fit: BoxFit.fitHeight);
   }
 
+
+  List<Widget> _getPretzel() {
+    List<Widget> list = new List();
+
+    for (Pretzel pretzel in pretzels) {
+      list.add(Positioned(
+        top: pretzel.position.dy,
+        left: pretzel.position.dx,
+        child: Transform.rotate(
+          angle: pretzel.rotation * pi * 2,
+          child: GestureDetector(
+            onTap: () {
+              pretzels.remove(pretzel);
+              if(alcool>0){
+                alcool -= 5;
+              }
+            },
+            child: Container(
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: _getPretzelBrot(pretzel)),
+            ),
+          ),
+        ),
+      ));
+    }
+
+    return list;
+  }
+
+  Widget _getPretzelBrot(Pretzel pretzel) {
+    return Image.asset('assets/pretzel.png', height: 80, fit: BoxFit.fitHeight);
+  }
+  
 /* _checkCollision() {
     if (touchSlice == null) {
       return;
