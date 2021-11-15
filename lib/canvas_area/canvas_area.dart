@@ -77,7 +77,7 @@ class _CanvasAreaState<CanvasArea> extends State {
         left: 120,
         top: 16,
         child: Text(
-          'Alcool: $alcool%',
+          'Drunk: $alcool%',
           style: TextStyle(fontSize: 20),
         )));
     widgetsOnStack.add(Positioned(
