@@ -13,6 +13,7 @@ class CanvasArea extends StatefulWidget {
 
 class _CanvasAreaState<CanvasArea> extends State {
   int score = 0;
+  int alcool = 0;
   List<Beer> beers = List();
   Stopwatch _stopwatch;
 
@@ -68,17 +69,25 @@ class _CanvasAreaState<CanvasArea> extends State {
     widgetsOnStack.add(_getBackground());
     widgetsOnStack.addAll(_getBeer());
     widgetsOnStack.add(Positioned(
+        left: 16,
+        top: 16,
+        child: Text(formatTime(_stopwatch.elapsedMilliseconds),
+            style: TextStyle(fontSize: 20))));
+    widgetsOnStack.add(Positioned(
+        left: 120,
+        top: 16,
+        child: Text(
+          'Alcool: $alcool%',
+          style: TextStyle(fontSize: 20),
+        )));
+    widgetsOnStack.add(Positioned(
         right: 16,
         top: 16,
         child: Text(
           'Score: $score',
           style: TextStyle(fontSize: 20),
         )));
-    widgetsOnStack.add(Positioned(
-        left: 16,
-        top: 16,
-        child: Text(formatTime(_stopwatch.elapsedMilliseconds),
-            style: TextStyle(fontSize: 20))));
+
     return widgetsOnStack;
   }
 
@@ -105,6 +114,9 @@ class _CanvasAreaState<CanvasArea> extends State {
             onTap: () {
               beers.remove(beer);
               score += 10;
+              if(alcool<=100){
+                alcool += 5;
+              }
             },
             child: Container(
               child: ClipRRect(
