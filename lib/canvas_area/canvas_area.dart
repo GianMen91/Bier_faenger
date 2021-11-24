@@ -19,6 +19,8 @@ class _CanvasAreaState<CanvasArea> extends State {
   List<Pretzel> pretzels = List();
   Stopwatch _stopwatch;
 
+
+
   String formatTime(int milliseconds) {
     var secs = milliseconds ~/ 1000;
     var hours = (secs ~/ 3600).toString().padLeft(2, '0');
@@ -38,12 +40,10 @@ class _CanvasAreaState<CanvasArea> extends State {
 
   void _spawnRandomBeers() {
     beers.add(new Beer(
-        position: Offset(0, 200),
+        position: Offset(Random().nextDouble() * 300, 0),
         width: 80,
-        height: 80,
-        additionalForce:
-            Offset(5 + Random().nextDouble() * 5, Random().nextDouble() * -10),
-        rotation: Random().nextDouble() / 3 - 0.16));
+        height: 80));
+
   }
 
   void _spawnRandomPretzel() {
@@ -68,7 +68,7 @@ class _CanvasAreaState<CanvasArea> extends State {
 
       if (Random().nextDouble() > 0.97) {
         _spawnRandomBeers();
-        _spawnRandomPretzel();
+        //_spawnRandomPretzel();
       }
 
       /*if (Random().nextDouble() > 0.97) {
@@ -76,7 +76,7 @@ class _CanvasAreaState<CanvasArea> extends State {
       }*/
     });
 
-    Future.delayed(Duration(milliseconds: 30), _tick);
+    Future.delayed(Duration(milliseconds: 70), _tick);
   }
 
   @override
@@ -131,8 +131,7 @@ class _CanvasAreaState<CanvasArea> extends State {
       list.add(Positioned(
         top: beer.position.dy,
         left: beer.position.dx,
-        child: Transform.rotate(
-          angle: beer.rotation * pi * 2,
+
           child: GestureDetector(
             onTap: () {
               beers.remove(beer);
@@ -147,8 +146,8 @@ class _CanvasAreaState<CanvasArea> extends State {
                   child: _getBeerGlass(beer)),
             ),
           ),
-        ),
-      ));
+        ));
+
     }
 
     return list;
