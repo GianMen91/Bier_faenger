@@ -61,17 +61,23 @@ class _CanvasAreaState<CanvasArea> extends State {
         pretzel.applyGravity();
       }
 
-      if (Random().nextDouble() > 0.97) {
+      if (Random().nextDouble()*10 > 9.5) {
         _spawnRandomBeers();
 
       }
 
-      if (Random().nextDouble()*100 > 99) {
+      if (Random().nextDouble()*100 > 99.8) {
         _spawnRandomPretzel();
       }
     });
 
-    Future.delayed(Duration(milliseconds: 70), _tick);
+    if(alcool==100){
+      Future.delayed(Duration(milliseconds: 30), _tick);
+    }else if(alcool> 50 && alcool <100) {
+      Future.delayed(Duration(milliseconds: 50), _tick);
+    }else{
+      Future.delayed(Duration(milliseconds: 70), _tick);
+    }
   }
 
   @override
@@ -131,7 +137,7 @@ class _CanvasAreaState<CanvasArea> extends State {
             onTap: () {
               beers.remove(beer);
               score += 10;
-              if(alcool<=100){
+              if(alcool<100){
                 alcool += 5;
               }
             },
