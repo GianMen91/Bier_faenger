@@ -8,9 +8,9 @@ class Pretzel extends GravitationalObject {
     this.width,
     this.height,
     gravitySpeed = 0.0,
-    additionalForce = const Offset(0,0),
+    //additionalForce = const Offset(0,0),
     rotation = 0.25
-  }) : super(position: position, gravitySpeed: gravitySpeed, additionalForce: additionalForce, rotation: rotation);
+  }) : super(position: position, gravitySpeed: gravitySpeed);
 
   double width;
   double height;

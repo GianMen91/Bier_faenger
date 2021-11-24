@@ -32,7 +32,6 @@ class _CanvasAreaState<CanvasArea> extends State {
   @override
   void initState() {
     _spawnRandomBeers();
-    _spawnRandomPretzel();
     _tick();
     _stopwatch = Stopwatch();
     super.initState();
@@ -43,17 +42,13 @@ class _CanvasAreaState<CanvasArea> extends State {
         position: Offset(Random().nextDouble() * 300, 0),
         width: 80,
         height: 80));
-
   }
 
   void _spawnRandomPretzel() {
     pretzels.add(new Pretzel(
-        position: Offset(0, 200),
+        position: Offset(Random().nextDouble() * 300, 0),
         width: 80,
-        height: 80,
-        additionalForce:
-        Offset(5 + Random().nextDouble() * 5, Random().nextDouble() * -10),
-        rotation: Random().nextDouble() / 3 - 0.16));
+        height: 80));
   }
 
   void _tick() {
@@ -68,12 +63,12 @@ class _CanvasAreaState<CanvasArea> extends State {
 
       if (Random().nextDouble() > 0.97) {
         _spawnRandomBeers();
-        //_spawnRandomPretzel();
+
       }
 
-      /*if (Random().nextDouble() > 0.97) {
+      if (Random().nextDouble() > 0.97) {
         _spawnRandomPretzel();
-      }*/
+      }
     });
 
     Future.delayed(Duration(milliseconds: 70), _tick);
@@ -165,8 +160,7 @@ class _CanvasAreaState<CanvasArea> extends State {
       list.add(Positioned(
         top: pretzel.position.dy,
         left: pretzel.position.dx,
-        child: Transform.rotate(
-          angle: pretzel.rotation * pi * 2,
+
           child: GestureDetector(
             onTap: () {
               pretzels.remove(pretzel);
@@ -181,7 +175,7 @@ class _CanvasAreaState<CanvasArea> extends State {
             ),
           ),
         ),
-      ));
+      );
     }
 
     return list;

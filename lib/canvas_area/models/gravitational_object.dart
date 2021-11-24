@@ -17,8 +17,8 @@ abstract class GravitationalObject {
   void applyGravity() {
     gravitySpeed += _gravity;
     position = Offset(
-        position.dx + additionalForce.dx,
-        position.dy + gravitySpeed + additionalForce.dy
+        position.dx,
+        position.dy + gravitySpeed
     );
   }
 }
