@@ -66,7 +66,7 @@ class _CanvasAreaState<CanvasArea> extends State {
 
       }
 
-      if (Random().nextDouble() > 0.97) {
+      if (Random().nextDouble()*100 > 99) {
         _spawnRandomPretzel();
       }
     });
