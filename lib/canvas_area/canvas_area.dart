@@ -61,7 +61,7 @@ class _CanvasAreaState<CanvasArea> extends State {
         pretzel.applyGravity();
       }
 
-      if (Random().nextDouble()*10 > 9.5) {
+      if (Random().nextDouble() > 0.97) {
         _spawnRandomBeers();
 
       }
